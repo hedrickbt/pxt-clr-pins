@@ -9,7 +9,7 @@
     "files": [
         "README.md",
         "clrpins.ts",
-		"clrpins.cpp",
+		"clrpins.cpp"
     ],
     "testFiles": [
         "test.ts"

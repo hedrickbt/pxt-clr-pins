@@ -27,30 +27,48 @@ namespace clr-pins {
 		return clr-pins.i2cWrite(data);
     }
 
-	    /**
-     * Send start to I2C.
+    /**
+     * Write one number to an I2C address.
      */
-    //% help=pins/i2c-start weight=5 group="i2c" inlineInputMode="external"
-    //% blockId=pins_i2c_start block="i2c start"
-    export function i2cSendStart(): number {
-		clr-pins.i2cStart();
+    //% help=pins/i2c-write-number weight=4 group="i2c"
+    //% blockId=i2c_writenumber block="i2c write number|at address %address|with value %value|of format %format=i2c_sizeof|repeated %repeat"
+    export function i2cWriteNumber(address: number, value: number, format: NumberFormat, repeated?: boolean): void {
+        let buf = createBuffer(pins.sizeOf(format))
+        buf.setNumber(format, 0, value)
+        pins.i2cWriteBuffer(address, buf, repeated)
     }
-	
-		    /**
-     * Send stop to I2C.
-     */
-    //% help=pins/i2c-stop weight=5 group="i2c" inlineInputMode="external"
-    //% blockId=pins_i2c_stop block="i2c stop"
-    export function i2cSendStop(): number {
-		clr-pins.i2cStop();
-    }
-	
-			    /**
-     * Send unlock to I2C.
-     */
-    //% help=pins/i2c-unlock weight=5 group="i2c" inlineInputMode="external"
-    //% blockId=pins_i2c_unlock block="i2c unlock"
-    export function i2cSendUnlock(): number {
-		clr-pins.i2cUnlock();
+
+    export class I2CDevice {
+        public address: number;
+        private _hasError: boolean;
+        constructor(address: number) {
+            this.address = address
+        }
+        public readInto(buf: Buffer, repeat = false, start = 0, end: number = null) {
+            if (end === null)
+                end = buf.length
+            if (start >= end)
+                return
+            let res = i2cReadBuffer(this.address, end - start, repeat)
+            if (!res) {
+                this._hasError = true
+                return
+            }
+            buf.write(start, res)
+        }
+        public write(buf: Buffer, repeat = false) {
+            let res = i2cWriteBuffer(this.address, buf, repeat)
+            if (res) {
+                this._hasError = true
+            }
+        }
+        public begin() {
+            this._hasError = false
+        }
+        public end() {
+        }
+        public ok() {
+            return !this._hasError
+        }
     }
 }
