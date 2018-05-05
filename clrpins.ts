@@ -26,15 +26,31 @@ namespace clr-pins {
     export function i2cWriteByte(data: number): number {
 		return clr-pins.i2cWrite(data);
     }
-
-    /**
-     * Write one number to an I2C address.
+	
+		    /**
+     * Send Start I2C.
      */
-    //% help=pins/i2c-write-number weight=4 group="i2c"
-    //% blockId=i2c_writenumber block="i2c write number|at address %address|with value %value|of format %format=i2c_sizeof|repeated %repeat"
-    export function i2cWriteNumber(address: number, value: number, format: NumberFormat, repeated?: boolean): void {
-        let buf = createBuffer(pins.sizeOf(format))
-        buf.setNumber(format, 0, value)
-        pins.i2cWriteBuffer(address, buf, repeated)
+    //% help=pins/i2c-send-start weight=5 group="i2c" inlineInputMode="external"
+    //% blockId=pins_i2c_sendstart block="i2c send start"
+    export function i2cSendStart() {
+		clr-pins.i2cStart();
+    }
+
+	/**
+     * Send Stop I2C.
+     */
+    //% help=pins/i2c-send-stop weight=5 group="i2c" inlineInputMode="external"
+    //% blockId=pins_i2c_sendstop block="i2c send stop"
+    export function i2cSendStop() {
+		clr-pins.i2cStop();
+    }
+	
+		/**
+     * Send Unlock I2C.
+     */
+    //% help=pins/i2c-send-unlock weight=5 group="i2c" inlineInputMode="external"
+    //% blockId=pins_i2c_sendunlock block="i2c send unlock"
+    export function i2cSendUnlock() {
+		clr-pins.i2cUnlock();
     }
 }
