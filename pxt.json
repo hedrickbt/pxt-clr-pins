@@ -8,7 +8,8 @@
     },
     "files": [
         "README.md",
-        "clrpins.ts"
+        "clrpins.ts",
+        "clrpins.cpp"
     ],
     "testFiles": [
         "test.ts"
