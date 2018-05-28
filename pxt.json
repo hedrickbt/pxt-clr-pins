@@ -1,6 +1,6 @@
 {
     "name": "clr-pins",
-    "version": "0.0.4",
+    "version": "0.0.5",
     "description": "Clive Lego Rebotics additional support for pins",
     "license": "MIT",
     "dependencies": {
@@ -8,8 +8,7 @@
     },
     "files": [
         "README.md",
-        "clrpins.ts",
-        "clrpins.cpp"
+        "clrpins.ts"
     ],
     "testFiles": [
         "test.ts"
