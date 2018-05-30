@@ -31,9 +31,9 @@ namespace clr_pins {
       
       for (let col = cols - 1; col >= 0; col--) {
           // set the current column value to high
-          pins.i2cWriteNumber(32, 255 - 2 ** col, format, false)
+          pins.i2cWriteNumber(address, 255 - 2 ** col, format, false)
           // actually reading the keys
-          temp_key_row = pins.i2cReadNumber(32, format, false)
+          temp_key_row = pins.i2cReadNumber(address, format, false)
           // process the key reading results
           // The bits are from left to right row1-row4...col1-col4.  IE.  11110000 would be rows high, cols low
           for (let row = cols + rows - 1; row >= cols; row--) {
@@ -43,13 +43,13 @@ namespace clr_pins {
                   found_row = ((rows + cols - 1) - row) + ""
                   
                   // set all columns back to high
-                  pins.i2cWriteNumber(32, 255, format, false)
+                  pins.i2cWriteNumber(address, 255, format, false)
 
                   return [found_key, found_col, found_row]
               }
           }
           // set all columns back to high
-          pins.i2cWriteNumber(32, 255, format, false)
+          pins.i2cWriteNumber(address, 255, format, false)
       }        
       
       return default_keypress
