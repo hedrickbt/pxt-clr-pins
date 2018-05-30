@@ -38,9 +38,9 @@ namespace clr_pins {
           // The bits are from left to right row1-row4...col1-col4.  IE.  11110000 would be rows high, cols low
           for (let row = cols + rows - 1; row >= cols; row--) {
               if ((temp_key_row & (2 ** row)) == 0) {
-                  found_key = keys[(((rows + cols - 1) - row) * cols) + col]
                   found_col = ((cols - 1) - col) + ""
                   found_row = ((rows + cols - 1) - row) + ""
+                  found_key = keys[(((rows + cols - 1) - row) * rows) + ((cols - 1) - col)]
                   
                   // set all columns back to high
                   pins.i2cWriteNumber(address, 255, format, false)
